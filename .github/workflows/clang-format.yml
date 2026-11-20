@@ -1,4 +1,3 @@
-
 name: Check code format
 
 on: [push, pull_request]
@@ -16,7 +15,7 @@ jobs:
     - name: clang-format
       run: |
         # Run clang-format
-        CHANGED_FILES=`git diff --name-only -r HEAD~ --diff-filter=d | grep -E '.(c|cpp|h|hpp)$' | xargs`
+        CHANGED_FILES=$(git diff --name-only -r HEAD~ --diff-filter=d | { grep -E '\.(c|cpp|h|hpp)$' || test "$?" -eq 1; } | xargs)
         echo "Changed files: $CHANGED_FILES"
         [ -z "$CHANGED_FILES" ] && exit 0
         clang-format -i $CHANGED_FILES
