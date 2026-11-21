@@ -1,4 +1,3 @@
-
 name: Check code format
 
 on: [push, pull_request]
@@ -31,10 +30,10 @@ jobs:
     - name: Upload clang-format patch
       uses: actions/upload-artifact@v2
       if: ${{ failure() }}
-      # Unfortunately, artifact uploads are always zips :(
       with:
         name: clang-format-patch
         path: clang-format.patch
+        if-no-files-found: warn
     - name: clang-format patch display
       if: ${{ failure() }}
       run: |
